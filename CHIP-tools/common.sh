@@ -52,7 +52,7 @@ wait_for_fastboot() {
   echo -n "waiting for fastboot...";
   export FLASH_WAITING_FOR_DEVICE=1
   for ((i=$TIMEOUT; i>0; i--)) {
-    if [[ ! -z "$(${FASTBOOT} -i 0x1f3a $@ devices)" ]]; then
+    if [[ ! -z "$(${FASTBOOT}  $@ devices)" ]]; then
       echo "OK";
       unset FLASH_WAITING_FOR_DEVICE
       return 0;
@@ -227,8 +227,8 @@ flash_images() {
 
   export FLASH_VID_PID=1f3a1010
   if wait_for_fastboot; then
-    ${FASTBOOT} -i 0x1f3a -u flash UBI $IMAGESDIR/chip-$nand_erasesize-$nand_writesize-$nand_oobsize.ubi.sparse || RC=1
-    ${FASTBOOT} -i 0x1f3a continue > /dev/null
+    ${FASTBOOT} -u flash UBI $IMAGESDIR/chip-$nand_erasesize-$nand_writesize-$nand_oobsize.ubi.sparse || RC=1
+    ${FASTBOOT} continue > /dev/null
   else
     echo "failed to flash the UBI image"
     RC=1

@@ -197,10 +197,10 @@ else
 
 	echo == waiting for fastboot ==
 	if wait_for_fastboot; then
-		fastboot -i 0x1f3a -u flash UBI ${SPARSE_UBI}
+		fastboot -u flash UBI ${SPARSE_UBI}
 		assert_error 134
 
-		fastboot -i 0x1f3a continue
+		fastboot  continue
 		assert_error 135
 	else
 		rm -rf "${TMPDIR}"
